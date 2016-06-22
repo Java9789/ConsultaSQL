@@ -1,5 +1,6 @@
 package tvk.views;
 
+import java.awt.EventQueue;
 import tvk.control.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,12 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 public class XD extends JFrame {
-    private boolean borrar = false;
     DefaultTableModel tabla = new DefaultTableModel(){
         @Override
         public boolean isCellEditable(int rowIndex, int vColIndex){
@@ -22,7 +24,7 @@ public class XD extends JFrame {
         }
     };
 
-    public XD() {        
+    public XD(){        
         initComponents();         
         setLocationRelativeTo(null);
     }
@@ -115,18 +117,18 @@ public class XD extends JFrame {
     
     public void LimpiarTabla(){
         try {
-        int filas = tbConsulta.getRowCount();
-        int filas1 = tbConsulta.getColumnCount();
-        TableColumnModel tcm = tbConsulta.getColumnModel();
-        for(int i=0;filas>i;i++){
-            tabla.removeRow(0);
-        }
-        for(int j=0;j<filas1;j++){            
-            // Se pide la columna por su número, empezando en cero.
-            TableColumn columnaABorrar = tcm.getColumn(j);             
-            tbConsulta.removeColumn(columnaABorrar);
-            // tbConsulta.removeColumn(tbConsulta.getColumnModel().getColumn(filas1));
-        }        
+            int filas = tbConsulta.getRowCount();
+            int filas1 = tbConsulta.getColumnCount();
+            TableColumnModel tcm = tbConsulta.getColumnModel();
+            for(int i=0;filas>i;i++){
+                tabla.removeRow(0);
+            }
+            for(int j=0;j<filas1;j++){            
+                // Se pide la columna por su número, empezando en cero.
+                TableColumn columnaABorrar = tcm.getColumn(j);             
+                tbConsulta.removeColumn(columnaABorrar);
+                // tbConsulta.removeColumn(tbConsulta.getColumnModel().getColumn(filas1));
+            }        
         } catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -174,37 +176,31 @@ public class XD extends JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+            for(UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()){
+                if("Nimbus".equals(info.getName())){
+                    UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(XD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(XD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(XD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(XD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e){
+            Logger.getLogger(XD.class.getName()).log(Level.SEVERE, null, e);
         }
         //</editor-fold>
-
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        EventQueue.invokeLater(new Runnable(){
+            public void run(){
                 new XD().setVisible(true);
             }
         });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
     private javax.swing.JButton jButton1;
